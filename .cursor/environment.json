@@ -1,0 +1,17 @@
+{
+  "name": "Fog — WebMCP Challenge",
+  "install": "npm ci",
+  "ports": [
+    {
+      "name": "Vite dev server",
+      "port": 43123
+    }
+  ],
+  "terminals": [
+    {
+      "name": "vite-dev",
+      "command": "npm run dev",
+      "description": "Fog companion app (Vite + React). Serves on http://127.0.0.1:43123 for UI work. WebMCP must be tested on the deployed HTTPS URL in ChatGPT desktop or Chrome with the WebMCP flag."
+    }
+  ]
+}

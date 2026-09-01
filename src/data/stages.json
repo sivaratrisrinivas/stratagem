@@ -1,0 +1,14 @@
+[
+  {
+    "id": "pre_eye",
+    "label": "Pre-Eye of Cthulhu",
+    "order": 0,
+    "unlocksAfterBoss": null
+  },
+  {
+    "id": "post_eye",
+    "label": "After Eye of Cthulhu",
+    "order": 1,
+    "unlocksAfterBoss": "eye_of_cthulhu"
+  }
+]

@@ -1,0 +1,89 @@
+.app {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+  font-family: system-ui, sans-serif;
+  color: #e8eef7;
+}
+
+.eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8aa0c7;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.lede {
+  margin: 0.75rem 0 0;
+  line-height: 1.5;
+  color: #b8c5dc;
+}
+
+.status,
+.next {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  border: 1px solid #2a3550;
+  border-radius: 12px;
+  background: #121826;
+}
+
+h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+dl {
+  margin: 0;
+}
+
+dl > div {
+  display: grid;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+dl > div:last-child {
+  margin-bottom: 0;
+}
+
+dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #8aa0c7;
+}
+
+dd {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.ok {
+  color: #7ddea8;
+}
+
+.warn {
+  color: #f0c27a;
+}
+
+code {
+  font-size: 0.9em;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: #1c2436;
+}
+
+ol {
+  margin: 0;
+  padding-left: 1.25rem;
+  line-height: 1.6;
+  color: #b8c5dc;
+}
