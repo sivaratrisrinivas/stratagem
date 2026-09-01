@@ -1,12 +1,13 @@
 .layout {
-  max-width: 960px;
+  max-width: 980px;
   margin: 0 auto;
   padding: 2rem 1.25rem 4rem;
   color: #e8eef7;
+  font-family: "Segoe UI", system-ui, sans-serif;
 }
 
 .hero {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .eyebrow {
@@ -19,36 +20,42 @@
 
 h1 {
   margin: 0;
-  font-size: 2.25rem;
+  font-size: 2.35rem;
+  letter-spacing: -0.02em;
 }
 
 .lede {
   margin: 0.5rem 0 0;
   color: #b5c3dc;
-  line-height: 1.5;
-  max-width: 40rem;
+  line-height: 1.55;
+  max-width: 44rem;
 }
 
 .grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .panel {
-  background: #121826;
+  background: linear-gradient(180deg, #141c2c 0%, #101722 100%);
   border: 1px solid #27324a;
-  border-radius: 12px;
-  padding: 1rem 1.1rem;
+  border-radius: 14px;
+  padding: 1rem 1.15rem;
 }
 
 .panel.wide {
   grid-column: 1 / -1;
 }
 
+.demo-bar {
+  margin-bottom: 0.25rem;
+}
+
 h2 {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.65rem;
   font-size: 0.95rem;
+  font-weight: 600;
 }
 
 .field {
@@ -59,7 +66,6 @@ h2 {
   color: #9eb0d0;
 }
 
-.field span,
 .field-label {
   font-size: 0.72rem;
   text-transform: uppercase;
@@ -78,6 +84,13 @@ button {
   padding: 0.5rem 0.65rem;
 }
 
+textarea {
+  resize: vertical;
+  min-height: 6rem;
+  font-family: ui-monospace, monospace;
+  font-size: 0.82rem;
+}
+
 button {
   cursor: pointer;
   background: #1a3a5c;
@@ -86,6 +99,43 @@ button {
 
 button:hover {
   background: #224b73;
+}
+
+.demo-buttons {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-top: 0.65rem;
+}
+
+.demo-btn {
+  display: grid;
+  gap: 0.25rem;
+  text-align: left;
+  padding: 0.75rem;
+  background: #0f1726;
+  border-color: #2d4060;
+}
+
+.demo-btn strong {
+  font-size: 0.9rem;
+}
+
+.demo-btn span {
+  font-size: 0.78rem;
+  color: #8aa0c7;
+  line-height: 1.35;
+}
+
+.demo-btn.ghost {
+  background: transparent;
+  border-style: dashed;
+}
+
+.demo-active {
+  margin: 0.65rem 0 0;
+  font-size: 0.85rem;
+  color: #7ddea8;
 }
 
 .bosses ul {
@@ -123,6 +173,18 @@ button:hover {
   margin: 0.15rem 0 0;
 }
 
+.tool-count .count {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #7ddea8;
+  margin-right: 0.5rem;
+}
+
+.tool-count .detail {
+  font-size: 0.85rem;
+  color: #9eb0d0;
+}
+
 .ok {
   color: #7ddea8;
 }
@@ -135,11 +197,35 @@ button:hover {
   margin: 0.75rem 0 0;
   padding: 0.75rem;
   border-radius: 8px;
-  background: #0d121c;
+  background: #0a0f18;
   border: 1px dashed #334060;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   line-height: 1.45;
   color: #c8d4ea;
+}
+
+.prompt-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.prompt-list li {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid #1e2a40;
+}
+
+.prompt-list li:last-child {
+  border-bottom: none;
+}
+
+.prompt-list code {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: #b8c8e4;
+  white-space: pre-wrap;
 }
 
 .pill-list,
@@ -149,6 +235,10 @@ button:hover {
   padding-left: 1.1rem;
   font-size: 0.88rem;
   color: #b5c3dc;
+}
+
+.recipe-list.compact li {
+  margin-bottom: 0.5rem;
 }
 
 .recipe-list li {
@@ -164,7 +254,15 @@ button:hover {
   color: #8aa0c7;
 }
 
+.missing {
+  display: block;
+  font-size: 0.78rem;
+  color: #8aa0c7;
+  margin-top: 0.15rem;
+}
+
 .muted {
   color: #7d93bc;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
+  margin: 0;
 }

@@ -1,3 +1,4 @@
+import { applyDemoScenario, resetFogProgress } from "../core/demo";
 import { getStage } from "../core/catalog";
 import { highestStageForBosses } from "../core/gating";
 import { guideHousingTips, validateHousing } from "../core/housing";
@@ -12,7 +13,7 @@ import {
   setSpoilerTier,
   setStageId,
 } from "../core/progress";
-import { listCraftable, lookupRecipe } from "../core/recipes";
+import { listCraftable, lookupRecipe, nearbyCraftable } from "../core/recipes";
 import { isLocked } from "../core/types";
 import { getModelContext, isWebMcpSupported, type JsonSchema } from "./types";
 
@@ -216,6 +217,45 @@ async function registerBaseTools(): Promise<void> {
       annotations: { readOnlyHint: true },
       execute: async () => ({ discoveries: getProgress().discoveries }),
     },
+    {
+      name: "load_demo_scenario",
+      title: "Load a demo scenario",
+      description:
+        "Reset player state to a curated demo for judges: guide_house, iron_crafting, or post_eye_unlock. Refreshes stage tools.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          scenario: {
+            type: "string",
+            enum: ["guide_house", "iron_crafting", "post_eye_unlock"],
+          },
+        },
+        required: ["scenario"],
+        additionalProperties: false,
+      },
+      execute: async (input: Record<string, unknown>) => {
+        const body = input as { scenario: "guide_house" | "iron_crafting" | "post_eye_unlock" };
+        const scenario = applyDemoScenario(body.scenario);
+        await refreshStageTools(scenario.state.stageId);
+        return {
+          scenario: scenario.id,
+          label: scenario.label,
+          chatPrompt: scenario.chatPrompt,
+          stageId: scenario.state.stageId,
+        };
+      },
+    },
+    {
+      name: "reset_progress",
+      title: "Reset all progress",
+      description: "Clear inventory, bosses, discoveries, and return to pre-Eye stage.",
+      inputSchema: emptySchema,
+      execute: async () => {
+        const fresh = resetFogProgress();
+        await refreshStageTools(fresh.stageId);
+        return { stageId: fresh.stageId, message: "Progress reset." };
+      },
+    },
   ];
 
   for (const tool of baseTools) {
@@ -249,7 +289,7 @@ async function registerStageTools(stageId: string): Promise<void> {
         const list = listCraftable(p.stageId, p.inventory);
         if (isLocked(list)) return list;
         const ready = list.filter((r) => r.canCraft);
-        const almost = list.filter((r) => !r.canCraft).slice(0, 8);
+        const almost = nearbyCraftable(p.stageId, p.inventory);
         return { craftableNow: ready, nearby: almost, stageId: p.stageId };
       },
     },

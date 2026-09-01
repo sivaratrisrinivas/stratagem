@@ -71,6 +71,15 @@ export function defeatBossAndAdvance(bossId: string): ProgressState {
   return setProgress({ defeatedBosses: bosses, stageId });
 }
 
+export function toggleBossDefeated(bossId: string): ProgressState {
+  const defeated = cache.defeatedBosses.includes(bossId);
+  const bosses = defeated
+    ? cache.defeatedBosses.filter((b) => b !== bossId)
+    : [...cache.defeatedBosses, bossId];
+  const stageId = highestStageForBosses(bosses);
+  return setProgress({ defeatedBosses: bosses, stageId });
+}
+
 export function markBossDefeated(bossId: string): ProgressState {
   if (cache.defeatedBosses.includes(bossId)) return cache;
   return setProgress({

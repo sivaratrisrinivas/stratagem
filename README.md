@@ -56,13 +56,13 @@ No server, env vars, or database required for the MVP.
 
 See [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the four-layer design (data → core → webmcp → ui).
 
-**WebMCP tools (9 total):**
+**WebMCP tools (11 total):**
 
-| Always available | Stage-scoped (re-registered on progress change) |
+| Always available (8) | Stage-scoped (3, re-registered on progress change) |
 | --- | --- |
-| `get_progress`, `set_progress`, `set_inventory`, `check_housing`, `log_discovery`, `get_discovery_log` | `what_can_i_craft`, `recipe_for`, `next_step_hint` |
+| `get_progress`, `set_progress`, `set_inventory`, `check_housing`, `log_discovery`, `get_discovery_log`, `load_demo_scenario`, `reset_progress` | `what_can_i_craft`, `recipe_for`, `next_step_hint` |
 
-Try in ChatGPT: *"Set my inventory to 30 iron bar and 40 wood, then what can I craft?"*
+See [TESTING.md](./TESTING.md) for judge-ready demo prompts. Try in ChatGPT: *"Load demo scenario iron_crafting. What can I craft now?"*
 
 ```
 src/

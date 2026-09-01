@@ -83,3 +83,17 @@ export function craftableNow(
   if (isLockedList(list)) return [];
   return list.filter((r) => r.canCraft);
 }
+
+/** Recipes missing at most `maxMissingStacks` ingredient types. */
+export function nearbyCraftable(
+  playerStageId: string,
+  inventory: Record<string, number>,
+  maxMissingStacks = 2,
+): CraftableRecipe[] {
+  const list = listCraftable(playerStageId, inventory);
+  if (isLockedList(list)) return [];
+  return list
+    .filter((r) => !r.canCraft && r.missing.length <= maxMissingStacks)
+    .sort((a, b) => a.missing.length - b.missing.length)
+    .slice(0, 8);
+}

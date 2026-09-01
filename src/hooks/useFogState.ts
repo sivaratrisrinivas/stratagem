@@ -1,5 +1,6 @@
-import { useSyncExternalStore } from "react";
+import { useSyncExternalStore, useCallback } from "react";
 import { getStage, stages } from "../core/catalog";
+import { demoScenarios, applyDemoScenario, resetFogProgress } from "../core/demo";
 import { getToolSnapshot, refreshStageTools } from "../webmcp/registry";
 import {
   getProgress,
@@ -7,9 +8,9 @@ import {
   setSpoilerTier,
   setStageId,
   setInventoryFromList,
-  defeatBossAndAdvance,
+  toggleBossDefeated,
 } from "../core/progress";
-import { craftableNow } from "../core/recipes";
+import { craftableNow, nearbyCraftable } from "../core/recipes";
 import { getHint } from "../core/hints";
 import { isLocked } from "../core/types";
 import type { SpoilerTier } from "../core/types";
@@ -32,27 +33,42 @@ export function useToolSnapshot() {
 export function useFogActions() {
   const progress = useFogProgress();
 
+  const afterProgressChange = useCallback(async (stageId: string) => {
+    await refreshStageTools(stageId);
+  }, []);
+
   return {
     progress,
+    stages,
+    demos: demoScenarios,
     setStage: (stageId: string) => {
       setStageId(stageId);
-      void refreshStageTools(stageId);
+      void afterProgressChange(stageId);
     },
     setTier: (tier: SpoilerTier) => setSpoilerTier(tier),
-    defeatBoss: (bossId: string) => {
-      const next = defeatBossAndAdvance(bossId);
-      void refreshStageTools(next.stageId);
+    toggleBoss: (bossId: string) => {
+      const next = toggleBossDefeated(bossId);
+      void afterProgressChange(next.stageId);
     },
     setInventoryText: (text: string) => {
       const lines = text.split("\n").filter(Boolean);
       setInventoryFromList(lines);
     },
+    loadDemo: (id: (typeof demoScenarios)[number]["id"]) => {
+      const scenario = applyDemoScenario(id);
+      void afterProgressChange(scenario.state.stageId);
+      return scenario;
+    },
+    resetAll: () => {
+      const fresh = resetFogProgress();
+      void afterProgressChange(fresh.stageId);
+    },
     previewHint: () => {
       const hint = getHint(progress.stageId, progress.spoilerTier);
       return isLocked(hint) ? hint.message : hint.text;
     },
-    craftableCount: () => craftableNow(progress.stageId, progress.inventory).length,
+    craftable: () => craftableNow(progress.stageId, progress.inventory),
+    nearby: () => nearbyCraftable(progress.stageId, progress.inventory),
     stageLabel: getStage(progress.stageId)?.label ?? progress.stageId,
-    stages,
   };
 }
