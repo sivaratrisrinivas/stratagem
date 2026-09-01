@@ -93,7 +93,7 @@ export function setInventoryFromList(itemNames: string[]): ProgressState {
   for (const name of itemNames) {
     const trimmed = name.trim();
     if (!trimmed) continue;
-    const match = trimmed.match(/^(\d+)\s+x?\s+(.+)$/i);
+    const match = trimmed.match(/^(\d+)\s*(?:x\s+)?(.+)$/i);
     const count = match ? Number.parseInt(match[1] ?? "1", 10) : 1;
     const label = match ? (match[2] ?? trimmed) : trimmed;
     const id = resolveItemId(label);
