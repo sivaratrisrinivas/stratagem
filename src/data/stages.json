@@ -10,5 +10,23 @@
     "label": "After Eye of Cthulhu",
     "order": 1,
     "unlocksAfterBoss": "eye_of_cthulhu"
+  },
+  {
+    "id": "post_eater_brain",
+    "label": "After Eater of Worlds / Brain of Cthulhu",
+    "order": 2,
+    "unlocksAfterBoss": "eater_or_brain"
+  },
+  {
+    "id": "pre_wall",
+    "label": "After Skeletron, pre-Wall of Flesh",
+    "order": 3,
+    "unlocksAfterBoss": "skeletron"
+  },
+  {
+    "id": "post_wall",
+    "label": "Hardmode (Wall of Flesh defeated)",
+    "order": 4,
+    "unlocksAfterBoss": "wall_of_flesh"
   }
 ]

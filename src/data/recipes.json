@@ -1,0 +1,142 @@
+[
+  {
+    "id": "work_bench",
+    "name": "Work Bench",
+    "result": "work_bench",
+    "resultCount": 1,
+    "ingredients": [{ "itemId": "wood", "count": 10 }],
+    "station": null,
+    "minStageId": "pre_eye"
+  },
+  {
+    "id": "torch",
+    "name": "Torch",
+    "result": "torch",
+    "resultCount": 3,
+    "ingredients": [{ "itemId": "wood", "count": 1 }, { "itemId": "gel", "count": 1 }],
+    "station": null,
+    "minStageId": "pre_eye"
+  },
+  {
+    "id": "chair",
+    "name": "Chair",
+    "result": "chair",
+    "resultCount": 1,
+    "ingredients": [{ "itemId": "wood", "count": 4 }],
+    "station": "work_bench",
+    "minStageId": "pre_eye"
+  },
+  {
+    "id": "table",
+    "name": "Table",
+    "result": "table",
+    "resultCount": 1,
+    "ingredients": [{ "itemId": "wood", "count": 8 }],
+    "station": "work_bench",
+    "minStageId": "pre_eye"
+  },
+  {
+    "id": "door",
+    "name": "Wood Door",
+    "result": "door",
+    "resultCount": 1,
+    "ingredients": [{ "itemId": "wood", "count": 6 }],
+    "station": "work_bench",
+    "minStageId": "pre_eye"
+  },
+  {
+    "id": "furnace",
+    "name": "Furnace",
+    "result": "furnace",
+    "resultCount": 1,
+    "ingredients": [
+      { "itemId": "stone_block", "count": 20 },
+      { "itemId": "wood", "count": 4 },
+      { "itemId": "torch", "count": 3 }
+    ],
+    "station": "work_bench",
+    "minStageId": "pre_eye"
+  },
+  {
+    "id": "iron_bar",
+    "name": "Iron Bar",
+    "result": "iron_bar",
+    "resultCount": 1,
+    "ingredients": [{ "itemId": "iron_ore", "count": 3 }],
+    "station": "furnace",
+    "minStageId": "pre_eye"
+  },
+  {
+    "id": "anvil",
+    "name": "Iron Anvil",
+    "result": "anvil",
+    "resultCount": 1,
+    "ingredients": [{ "itemId": "iron_bar", "count": 5 }],
+    "station": "work_bench",
+    "minStageId": "pre_eye"
+  },
+  {
+    "id": "iron_broadsword",
+    "name": "Iron Broadsword",
+    "result": "iron_broadsword",
+    "resultCount": 1,
+    "ingredients": [{ "itemId": "iron_bar", "count": 8 }],
+    "station": "anvil",
+    "minStageId": "pre_eye"
+  },
+  {
+    "id": "gold_bar",
+    "name": "Gold Bar",
+    "result": "gold_bar",
+    "resultCount": 1,
+    "ingredients": [{ "itemId": "gold_ore", "count": 3 }],
+    "station": "furnace",
+    "minStageId": "pre_eye"
+  },
+  {
+    "id": "suspicious_looking_eye",
+    "name": "Suspicious Looking Eye",
+    "result": "suspicious_looking_eye",
+    "resultCount": 1,
+    "ingredients": [{ "itemId": "lens", "count": 6 }],
+    "station": "demon_altar",
+    "minStageId": "pre_eye"
+  },
+  {
+    "id": "worm_food",
+    "name": "Worm Food",
+    "result": "worm_food",
+    "resultCount": 1,
+    "ingredients": [
+      { "itemId": "rotten_chunk", "count": 15 },
+      { "itemId": "demonite_bar", "count": 3 }
+    ],
+    "station": "demon_altar",
+    "minStageId": "post_eye"
+  },
+  {
+    "id": "bloody_spine",
+    "name": "Bloody Spine",
+    "result": "bloody_spine",
+    "resultCount": 1,
+    "ingredients": [
+      { "itemId": "vertebra", "count": 15 },
+      { "itemId": "crimtane_bar", "count": 3 }
+    ],
+    "station": "demon_altar",
+    "minStageId": "post_eye"
+  },
+  {
+    "id": "obsidian_skin_potion",
+    "name": "Obsidian Skin Potion",
+    "result": "obsidian_skin_potion",
+    "resultCount": 1,
+    "ingredients": [
+      { "itemId": "bottled_water", "count": 1 },
+      { "itemId": "fireblossom", "count": 1 },
+      { "itemId": "obsidian", "count": 1 }
+    ],
+    "station": "alchemy",
+    "minStageId": "pre_wall"
+  }
+]

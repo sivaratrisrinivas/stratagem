@@ -1,0 +1,23 @@
+[
+  { "id": "wood", "name": "Wood", "aliases": ["wood"] },
+  { "id": "stone_block", "name": "Stone Block", "aliases": ["stone", "stone blocks"] },
+  { "id": "gel", "name": "Gel", "aliases": ["gel"] },
+  { "id": "torch", "name": "Torch", "aliases": ["torches"] },
+  { "id": "copper_ore", "name": "Copper Ore", "aliases": ["copper"] },
+  { "id": "iron_ore", "name": "Iron Ore", "aliases": ["iron ore"] },
+  { "id": "iron_bar", "name": "Iron Bar", "aliases": ["iron bars", "iron"] },
+  { "id": "gold_ore", "name": "Gold Ore", "aliases": ["gold ore"] },
+  { "id": "gold_bar", "name": "Gold Bar", "aliases": ["gold bars", "gold"] },
+  { "id": "lens", "name": "Lens", "aliases": ["lenses"] },
+  { "id": "falling_star", "name": "Falling Star", "aliases": ["fallen star", "stars"] },
+  { "id": "chair", "name": "Chair", "aliases": ["chairs"] },
+  { "id": "table", "name": "Table", "aliases": ["tables"] },
+  { "id": "work_bench", "name": "Work Bench", "aliases": ["workbench", "work bench"] },
+  { "id": "door", "name": "Wood Door", "aliases": ["door", "wood door"] },
+  { "id": "suspicious_looking_eye", "name": "Suspicious Looking Eye", "aliases": ["eye summon", "eye of cthulhu summon"] },
+  { "id": "worm_food", "name": "Worm Food", "aliases": ["eater summon"] },
+  { "id": "bloody_spine", "name": "Bloody Spine", "aliases": ["brain summon"] },
+  { "id": "obsidian", "name": "Obsidian", "aliases": ["obsidian"] },
+  { "id": "hellstone_bar", "name": "Hellstone Bar", "aliases": ["hellstone bars"] },
+  { "id": "guide_voodoo_doll", "name": "Guide Voodoo Doll", "aliases": ["voodoo doll"] }
+]

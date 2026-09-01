@@ -7,14 +7,14 @@ export interface ToolAnnotations {
   untrustedContentHint?: boolean;
 }
 
-export interface ModelContextTool<TInput extends Record<string, unknown> = Record<string, unknown>> {
+export interface ModelContextTool {
   name: string;
   title?: string;
   description: string;
   inputSchema?: JsonSchema;
   annotations?: ToolAnnotations;
   execute: (
-    input: TInput,
+    input: Record<string, unknown>,
     options: { signal: AbortSignal },
   ) => Promise<unknown> | unknown;
 }

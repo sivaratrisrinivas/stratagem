@@ -1,0 +1,27 @@
+{
+  "pre_eye": {
+    "nudge": "Focus on shelter, a work bench, and better ore gear before chasing bosses.",
+    "hint": "Build a valid house for the Guide (light, chair, table or work bench, door, 60+ tiles). Mine iron or gold, craft an anvil, then make better weapons and armor.",
+    "answer": "Typical order: surface base → iron/gold gear → Suspicious Looking Eye (6 lenses at demon altar) → Eye of Cthulhu at night. Explore corruption/crimson for shadow orbs/hearts afterward."
+  },
+  "post_eye": {
+    "nudge": "Underground corruption or crimson holds the next progression trigger.",
+    "hint": "Smash shadow orbs or crimson hearts with a hammer to get a meteor and eventually summon the Eater or Brain. Upgrade to gold/platinum gear first.",
+    "answer": "After Eye: loot corruption/crimson for orbs/hearts, prepare platforms and piercing weapons, then break the third orb/heart to spawn Eater of Worlds or Brain of Cthulhu."
+  },
+  "post_eater_brain": {
+    "nudge": "The dungeon awaits — but only after you've handled the world's evil.",
+    "hint": "Defeat the Eater/Brain, then talk to the Old Man at the dungeon entrance at night after you're ready for Skeletron.",
+    "answer": "Craft better gear from demonite/crimtane, explore the dungeon after defeating Skeletron (not before — the Old Man will kill you)."
+  },
+  "pre_wall": {
+    "nudge": "Hellstone and a long bridge change the game.",
+    "hint": "Build a hell bridge, mine hellstone (watch for lava), craft a guide voodoo doll, and plan your Underworld fight for the Wall of Flesh.",
+    "answer": "Pre-hardmode finale: gear up in the dungeon, build a hell bridge, collect hellstone bars, then throw the Guide Voodoo Doll into lava in the Underworld to summon the Wall of Flesh."
+  },
+  "post_wall": {
+    "nudge": "The world just got harder — prioritize containment and new ore.",
+    "hint": "Hardmode spreads corruption/crimson and hallow. Use the Clentaminator later; immediately look for cobalt/palladium in the world.",
+    "answer": "Break demon/crimson altars with a hammer to spawn hardmode ores. Build a quarantine around your base and upgrade to cobalt/palladium → mythril/orichalcum → adamantite/titanium."
+  }
+}

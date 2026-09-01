@@ -52,7 +52,17 @@ No server, env vars, or database required for the MVP.
 2. Open the deployed URL.
 3. Optional: [Model Context Tool Inspector](https://github.com/beaufortfrancois/model-context-tool-inspector) extension.
 
-## Project layout
+## Architecture
+
+See [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the four-layer design (data → core → webmcp → ui).
+
+**WebMCP tools (9 total):**
+
+| Always available | Stage-scoped (re-registered on progress change) |
+| --- | --- |
+| `get_progress`, `set_progress`, `set_inventory`, `check_housing`, `log_discovery`, `get_discovery_log` | `what_can_i_craft`, `recipe_for`, `next_step_hint` |
+
+Try in ChatGPT: *"Set my inventory to 30 iron bar and 40 wood, then what can I craft?"*
 
 ```
 src/
