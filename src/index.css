@@ -1,24 +1,67 @@
 :root {
   color-scheme: dark;
-  font-family: system-ui, sans-serif;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-weight: 300;
   line-height: 1.5;
-  font-weight: 400;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --void: #050508;
+  --mist: rgba(255, 255, 255, 0.04);
+  --glass: rgba(255, 255, 255, 0.06);
+  --glass-edge: rgba(255, 255, 255, 0.12);
+  --text: rgba(255, 255, 255, 0.92);
+  --text-soft: rgba(255, 255, 255, 0.55);
+  --text-faint: rgba(255, 255, 255, 0.32);
+  --acid-a: #b8f0ff;
+  --acid-b: #e8a8ff;
+  --acid-c: #a8ffb8;
+  --glow: rgba(184, 240, 255, 0.35);
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background: #0b0f17;
+  background: var(--void);
+  color: var(--text);
+  overflow-x: hidden;
 }
 
 #root {
   min-height: 100vh;
+}
+
+::selection {
+  background: rgba(232, 168, 255, 0.35);
+  color: white;
+}
+
+:focus-visible {
+  outline: 2px solid var(--acid-b);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
