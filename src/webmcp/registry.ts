@@ -26,6 +26,22 @@ const emptySchema: JsonSchema = {
 let baseController: AbortController | null = null;
 let stageController: AbortController | null = null;
 
+const toolExecutors = new Map<
+  string,
+  (input: Record<string, unknown>, options: { signal: AbortSignal }) => Promise<unknown> | unknown
+>();
+
+export async function invokeFogTool(
+  name: string,
+  input: Record<string, unknown> = {},
+): Promise<unknown> {
+  const execute = toolExecutors.get(name);
+  if (!execute) {
+    throw new Error(`Tool not available: ${name}. Load a demo or refresh the page.`);
+  }
+  return execute(input, { signal: new AbortController().signal });
+}
+
 export type ToolRegistrationSnapshot = {
   webmcpSupported: boolean;
   baseToolCount: number;
@@ -45,19 +61,19 @@ export function getToolSnapshot(): ToolRegistrationSnapshot {
 }
 
 export async function initFogWebMcp(): Promise<ToolRegistrationSnapshot> {
-  if (!isWebMcpSupported()) {
-    snapshot = { webmcpSupported: false, baseToolCount: 0, stageToolCount: 0, stageId: getProgress().stageId };
-    return snapshot;
-  }
-
   await registerBaseTools();
   await registerStageTools(getProgress().stageId);
 
-  const modelContext = getModelContext();
-  if (modelContext) {
-    modelContext.ontoolchange = () => {
-      window.dispatchEvent(new CustomEvent("fog:tools-changed"));
-    };
+  const supported = isWebMcpSupported();
+  snapshot = { ...snapshot, webmcpSupported: supported };
+
+  if (supported) {
+    const modelContext = getModelContext();
+    if (modelContext) {
+      modelContext.ontoolchange = () => {
+        window.dispatchEvent(new CustomEvent("fog:tools-changed"));
+      };
+    }
   }
 
   return snapshot;
@@ -75,7 +91,6 @@ async function registerBaseTools(): Promise<void> {
   baseController = new AbortController();
   const signal = baseController.signal;
   const ctx = getModelContext();
-  if (!ctx) return;
 
   const baseTools = [
     {
@@ -259,22 +274,29 @@ async function registerBaseTools(): Promise<void> {
   ];
 
   for (const tool of baseTools) {
-    await ctx.registerTool(tool, { signal });
+    toolExecutors.set(tool.name, tool.execute);
+    if (ctx && isWebMcpSupported()) {
+      await ctx.registerTool(tool, { signal });
+    }
   }
 
   snapshot = {
     ...snapshot,
-    webmcpSupported: true,
     baseToolCount: baseTools.length,
     stageId: getProgress().stageId,
   };
 }
 
 async function registerStageTools(stageId: string): Promise<void> {
+  stageController?.abort();
   stageController = new AbortController();
   const signal = stageController.signal;
   const ctx = getModelContext();
-  if (!ctx) return;
+
+  // Clear stage-scoped executors before re-registering
+  for (const name of ["what_can_i_craft", "recipe_for", "next_step_hint"]) {
+    toolExecutors.delete(name);
+  }
 
   const stageTools = [
     {
@@ -343,7 +365,10 @@ async function registerStageTools(stageId: string): Promise<void> {
   ];
 
   for (const tool of stageTools) {
-    await ctx.registerTool(tool, { signal });
+    toolExecutors.set(tool.name, tool.execute);
+    if (ctx && isWebMcpSupported()) {
+      await ctx.registerTool(tool, { signal });
+    }
   }
 
   snapshot = {

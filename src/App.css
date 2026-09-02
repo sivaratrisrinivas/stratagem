@@ -663,3 +663,58 @@ textarea {
   font-weight: 400;
   color: var(--text-faint);
 }
+
+/* Agent replay panel */
+.agent-panel__head {
+  margin-bottom: 1rem;
+}
+
+.agent-panel__sub {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+}
+
+.agent-panel__run {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.9rem;
+}
+
+.agent-log {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-radius: var(--radius-md);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.agent-log__line {
+  padding: 0.65rem 1rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  font-family: ui-monospace, "SF Mono", monospace;
+}
+
+.agent-log__line:last-child {
+  border-bottom: none;
+}
+
+.agent-log__line--call {
+  color: var(--acid-a);
+}
+
+.agent-log__line--result {
+  color: var(--text-soft);
+}
+
+.agent-log__line--say {
+  color: var(--acid-b);
+  font-family: inherit;
+  font-style: italic;
+}

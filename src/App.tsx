@@ -3,6 +3,7 @@ import { getItemName } from "./core/catalog";
 import { useFogActions, useFogProgress, useToolSnapshot } from "./hooks/useFogState";
 import { isWebMcpSupported } from "./webmcp/types";
 import type { CraftableRecipe, DiscoveryEntry, Stage } from "./core/types";
+import { AgentPanel } from "./ui/AgentPanel";
 import "./App.css";
 
 const BOSSES = [
@@ -38,7 +39,7 @@ export function App() {
   const nearby = useMemo(() => actions.nearby(), [actions, progress.stageId, progress.inventory]);
   const hintPreview = actions.previewHint();
   const totalTools = tools.baseToolCount + tools.stageToolCount;
-  const displayTools = webmcpLive ? totalTools : EXPECTED_TOOLS;
+  const displayTools = totalTools > 0 ? totalTools : EXPECTED_TOOLS;
 
   const copyPrompt = async (text: string) => {
     try {
@@ -86,8 +87,8 @@ export function App() {
             </span>
             <span className="fog__pulse-label">tools</span>
             <span className="fog__pulse-detail">
-              {webmcpLive
-                ? `${tools.baseToolCount} base · ${tools.stageToolCount} stage`
+              {totalTools > 0
+                ? `${tools.baseToolCount} base · ${tools.stageToolCount} stage${webmcpLive ? "" : " · sim mode"}`
                 : `${EXPECTED_TOOLS} when connected`}
             </span>
           </div>
@@ -191,17 +192,6 @@ export function App() {
           </section>
 
           <section className="glass glass--wide">
-            <h2 className="glass__heading">Whisper</h2>
-            <div className="stat-row">
-              <dl className="stat">
-                <dt>Stage scope</dt>
-                <dd>{actions.stageLabel}</dd>
-              </dl>
-            </div>
-            <p className="hint-glass">{hintPreview}</p>
-          </section>
-
-          <section className="glass glass--wide">
             <h2 className="glass__heading">Try in ChatGPT</h2>
             <ul className="prompt-stack">
               {actions.demos.map((d) => (
@@ -213,6 +203,19 @@ export function App() {
                 </li>
               ))}
             </ul>
+          </section>
+
+          <AgentPanel />
+
+          <section className="glass glass--half">
+            <h2 className="glass__heading">Whisper</h2>
+            <div className="stat-row">
+              <dl className="stat">
+                <dt>Stage scope</dt>
+                <dd>{actions.stageLabel}</dd>
+              </dl>
+            </div>
+            <p className="hint-glass">{hintPreview}</p>
           </section>
 
           <section className="glass glass--half">
