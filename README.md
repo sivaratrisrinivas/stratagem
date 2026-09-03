@@ -1,93 +1,44 @@
 # Fog
 
-A second-monitor Terraria companion for the [WebMCP Challenge](https://webmcp.devpost.com/). The page exposes structured tools to ChatGPT or Codex so you can ask crafting, housing, and progression questions without alt-tabbing to a spoiler-heavy wiki.
+Second-monitor Terraria companion. You mark bosses and inventory. ChatGPT talks to the page through WebMCP. Recipes and hints come from that state. Later stages are not registered as tools, so the agent cannot call them.
 
-**Stack:** Vite · React · TypeScript · WebMCP (`document.modelContext.registerTool`) · static deploy (Vercel)
+Live: https://stratagem-opal.vercel.app
 
-## Where to build what
+WebMCP: document.modelContext.registerTool({ name, description, inputSchema, execute })
 
-| Work | Where |
-| --- | --- |
-| All source code, data, tests | **Cursor / this repo** |
-| Live URL for judges | **Vercel** (or Netlify / Cloudflare Pages) |
-| Real WebMCP testing | **Your machine** — ChatGPT desktop in-app browser or Chrome 149+ with `chrome://flags/#enable-webmcp-testing` |
+Eleven tools. Eight always on (get_progress, set_progress, set_inventory, check_housing, log_discovery, get_discovery_log, load_demo_scenario, reset_progress). Three swap with stage (what_can_i_craft, recipe_for, next_step_hint).
 
-Cursor runs the dev server for UI work. WebMCP site tools are validated on the **deployed HTTPS URL**, not only on localhost.
+## Run
 
-## Quick start (Cursor or local)
+    npm ci
+    npm run dev
 
-```bash
-npm ci
-npm run dev
-```
+http://127.0.0.1:43123 — UI only. WebMCP needs HTTPS or localhost.
 
-Open http://127.0.0.1:43123 — UI only. WebMCP requires a secure context (localhost or HTTPS).
+    npm run build && npm run preview
 
-```bash
-npm run build    # production bundle → dist/
-npm run preview  # serve dist/ locally
-```
+Vite + React + TypeScript. Static host (this one is Vercel). No env vars, no database.
 
-## Deploy (Vercel — recommended)
+## Test (judges)
 
-1. Push this repo to **public GitHub** with this `LICENSE` visible in the repo About section.
-2. [vercel.com/new](https://vercel.com/new) → Import repo → Framework preset **Vite** → Deploy.
-3. Copy the production URL (e.g. `https://fog-xxx.vercel.app`).
+ChatGPT desktop, Sol or Terra, in-app browser — or Chrome 149+ with chrome://flags/#enable-webmcp-testing.
 
-No server, env vars, or database required for the MVP.
+1. Open the live URL. Site tools should appear.
+2. Load demo scenario guide_house. Check housing and tell me what to craft. — missing light, torch.
+3. Load demo scenario post_eye_unlock. What should I do next?
+4. Reset progress. Stage tools lock.
 
-## Test WebMCP (required before submit)
+More prompts: TESTING.md
 
-### ChatGPT desktop (primary judging surface)
+## Layout
 
-1. Install/update the **ChatGPT desktop app**.
-2. Use **GPT-5.6 Sol or Terra** (Luna disables WebMCP).
-3. Open the **built-in browser** → your deployed URL.
-4. Address bar → **Site tools** → confirm tools like `get_progress` and `next_step_hint`.
-5. Ask: *"What's my progress and give me a nudge for what to do next?"*
-
-### Chrome (debugging)
-
-1. Chrome 149+ → `chrome://flags/#enable-webmcp-testing` → **Enabled** → relaunch.
-2. Open the deployed URL.
-3. Optional: [Model Context Tool Inspector](https://github.com/beaufortfrancois/model-context-tool-inspector) extension.
-
-## Architecture
-
-See [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the four-layer design (data → core → webmcp → ui).
-
-**WebMCP tools (11 total):**
-
-| Always available (8) | Stage-scoped (3, re-registered on progress change) |
-| --- | --- |
-| `get_progress`, `set_progress`, `set_inventory`, `check_housing`, `log_discovery`, `get_discovery_log`, `load_demo_scenario`, `reset_progress` | `what_can_i_craft`, `recipe_for`, `next_step_hint` |
-
-See [TESTING.md](./TESTING.md) for judge-ready demo prompts. Try in ChatGPT: *"Load demo scenario iron_crafting. What can I craft now?"*
-
-```
-src/
-  webmcp/          # Tool registration (document.modelContext)
-  data/            # Stage-tagged game data (recipes, hints)
-  lib/             # Gating engine, housing rules (pure functions)
-  App.tsx          # Companion UI
-.cursor/
-  environment.json # Cloud Agent: npm ci + Vite on :43123
-vercel.json        # Static SPA deploy
-```
-
-## Hackathon submission checklist
-
-- [ ] Live HTTPS URL works in ChatGPT browser or Chrome + WebMCP flag
-- [ ] Public GitHub repo with OSS license in About
-- [ ] README explains WebMCP fit and how to test
-- [ ] <3 min YouTube demo with audio
-- [ ] Devpost description: fit, UX, human+agent together, implementation notes
-- [ ] Freeze repo + site after deadline (Sep 3, 2026 1:00 pm PDT)
-
-## Data licensing
-
-Game reference data may be derived from the [Terraria Wiki](https://terraria.wiki.gg/) (CC BY-NC-SA 4.0). Attribute in `data/README.md` when you add curated exports. Application code is MIT.
+    src/webmcp/   registerTool
+    src/core/     gating, housing, hints
+    src/data/     stages, recipes, items
+    src/App.tsx   second-monitor UI
 
 ## License
 
-MIT — see [LICENSE](./LICENSE).
+MIT — LICENSE. Recipe/hint text may follow the Terraria Wiki (CC BY-NC-SA 4.0); see src/data/README.md.
+
+Not affiliated with Re-Logic.
