@@ -1,44 +1,116 @@
 # Fog
 
-Second-monitor Terraria companion. You mark bosses and inventory. ChatGPT talks to the page through WebMCP. Recipes and hints come from that state. Later stages are not registered as tools, so the agent cannot call them.
+Second-monitor companion for a progression game. You mark bosses beaten and what you're carrying. An agent talks to the page through WebMCP for craft, housing, and what's next. Later stages are not registered as tools, so the agent cannot call them.
 
-Live: https://stratagem-opal.vercel.app
+| | |
+| --- | --- |
+| **Live** | https://stratagem-opal.vercel.app |
+| **Repo** | https://github.com/sivaratrisrinivas/stratagem |
+| **Hackathon** | [WebMCP Challenge](https://webmcp.devpost.com/) |
+| **License** | MIT — [LICENSE](./LICENSE) |
 
-WebMCP: document.modelContext.registerTool({ name, description, inputSchema, execute })
+Built with Vite, React, TypeScript. Static deploy on Vercel. No server, env vars, or database.
 
-Eleven tools. Eight always on (get_progress, set_progress, set_inventory, check_housing, log_discovery, get_discovery_log, load_demo_scenario, reset_progress). Three swap with stage (what_can_i_craft, recipe_for, next_step_hint).
+## Why WebMCP
 
-## Run
+Wikis don't know your run. Chatbots invent recipes and spoil ahead. Fog keeps recipes, housing rules, and hints on the page. Gating is code. WebMCP only exposes the unlocked slice. The agent handles messy questions; the page owns correctness and what stays locked.
 
-    npm ci
-    npm run dev
+```ts
+await document.modelContext.registerTool({
+  name: "what_can_i_craft",
+  description: "List recipes unlocked at the player's stage",
+  inputSchema: { type: "object", properties: {} },
+  execute: async () => {
+    /* core gating + recipe lookup */
+  },
+});
+```
 
-http://127.0.0.1:43123 — UI only. WebMCP needs HTTPS or localhost.
+## Tools (11)
 
-    npm run build && npm run preview
+| Always on (8) | Stage-scoped (3) |
+| --- | --- |
+| `get_progress`, `set_progress`, `set_inventory`, `check_housing`, `log_discovery`, `get_discovery_log`, `load_demo_scenario`, `reset_progress` | `what_can_i_craft`, `recipe_for`, `next_step_hint` |
 
-Vite + React + TypeScript. Static host (this one is Vercel). No env vars, no database.
+Stage tools register on an `AbortController`. On progress change that controller aborts and the unlocked set re-registers. Locked content is not a soft refuse — those tools are gone.
 
-## Test (judges)
+## Architecture
 
-ChatGPT desktop, Sol or Terra, in-app browser — or Chrome 149+ with chrome://flags/#enable-webmcp-testing.
+```mermaid
+flowchart TB
+  agent["Agent — ChatGPT / Codex"]
+  ui["UI — React App + hooks"]
+  webmcp["webmcp/ — registerTool adapters"]
+  core["core/ — gating, recipes, housing, hints, progress"]
+  data["data/*.json — stages, recipes, items, hints"]
 
-1. Open the live URL. Site tools should appear.
-2. Load demo scenario guide_house. Check housing and tell me what to craft. — missing light, torch.
-3. Load demo scenario post_eye_unlock. What should I do next?
-4. Reset progress. Stage tools lock.
+  agent -->|"WebMCP tool calls"| webmcp
+  ui --> core
+  webmcp --> core
+  core --> data
+```
 
-More prompts: TESTING.md
+- **Single source of truth** — `core/progress.ts` holds stage, inventory, discoveries. UI and tools both go through core.
+- **Gating in core** — not in the model. WebMCP only registers what the stage allows.
+- **No backend** — static SPA. More content = more JSON rows.
+
+Details: [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)
+
+## Run locally
+
+```bash
+npm ci
+npm run dev
+```
+
+Open http://127.0.0.1:43123 — UI only. WebMCP needs a secure context (localhost or HTTPS).
+
+```bash
+npm run build
+npm run preview
+```
+
+## Test WebMCP (judges)
+
+Use **ChatGPT desktop** (Sol or Terra) in-app browser, or **Chrome 149+** with `chrome://flags/#enable-webmcp-testing` enabled.
+
+1. Open https://stratagem-opal.vercel.app
+2. Confirm Site tools in the address bar
+3. Try:
+
+```
+Load demo scenario guide_house. Check housing and tell me what to craft.
+```
+
+Expect missing light → torch.
+
+```
+Load demo scenario post_eye_unlock. What should I do next?
+```
+
+```
+Reset progress.
+```
+
+Stage craft/hint tools should lock.
+
+Full script: [TESTING.md](./TESTING.md)
 
 ## Layout
 
-    src/webmcp/   registerTool
-    src/core/     gating, housing, hints
-    src/data/     stages, recipes, items
-    src/App.tsx   second-monitor UI
+```
+src/
+  webmcp/     document.modelContext.registerTool
+  core/       gating, housing, recipes, hints, progress
+  data/       stages, recipes, items, hints (JSON)
+  hooks/      shared state for UI
+  App.tsx     second-monitor UI
+docs/         architecture
+TESTING.md    judge prompts
+LICENSE       MIT
+vercel.json   static SPA
+```
 
-## License
+## Data note
 
-MIT — LICENSE. Recipe/hint text may follow the Terraria Wiki (CC BY-NC-SA 4.0); see src/data/README.md.
-
-Not affiliated with Re-Logic.
+Application code is MIT. Curated game reference text may follow the Terraria Wiki (CC BY-NC-SA 4.0) — see [src/data/README.md](./src/data/README.md). Unofficial fan project; not affiliated with Re-Logic.
